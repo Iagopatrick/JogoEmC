@@ -34,11 +34,49 @@ char *AlocaVetor(int colunas){
     return v;
 }
 
+
+void queima(char **tabuleiro, int indice_Linha, int indice_coluna){
+    int i, j;
+    // preciso andar pela direita e pela esquerda. O fogo começa numa cela central, a partir dela, serão contadas
+    // oito celulas da direita e oito pra esquerda. Para cima e para baixo serao oito, mas na celula seguinte passa para
+    // sete células
+    // ATENÇÃO: teoricamente eu precisaria de um limitador, para nao ultrapassar o tamanho da matriz
+    for(i = indice_Linha - 8; i < indice_Linha + 8; i++){
+
+        for(j = indice_coluna - 8; j < indice_coluna + 8; j++){
+            if(tabuleiro[indice_Linha - i][indice_coluna - j] == 'P'){
+                tabuleiro[indice_Linha - i][indice_coluna - j] = 'F';
+
+            }
+        }
+    }
+}
+
+void ataque_MagoFogo(char **tabuleiro, int linhas, int colunas){}
+
 int main(){
     int linhas, colunas, i, j;
     char **tabuleiro, *Vetor;
-    colunas = 2;
-    Vetor = AlocaVetor(colunas);
-    scanf("%s", Vetor);
-    printf("%s", Vetor);
+    
+    scanf("%d %d", &linhas, &colunas);
+    
+    tabuleiro = AlocaTabuleiro(linhas, colunas);
+    Vetor = AlocaVetor(colunas + 1);
+
+    for(i = 0; i < linhas; i++){
+        getchar();
+        fgets(Vetor, colunas + 1, stdin);
+        for(j = 0; j < colunas; j++){
+            tabuleiro[i][j] = Vetor[j];
+        }
+    }
+
+    // queima(tabuleiro, 10, 5);
+
+    for(i = 0; i < linhas; i++){
+        for(j = 0; j < colunas; j++){
+            printf("%c", tabuleiro[i][j]);
+        }
+        printf("\n");
+    }
 }
