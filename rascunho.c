@@ -34,6 +34,15 @@ char *AlocaVetor(int colunas){
     return v;
 }
 
+int *AlocaVetorInt(int num){
+    int *v;
+    v = (int *) malloc (num * sizeof(int));
+    if(v == NULL){
+        printf("Erro, memoria insuficiente!");
+        exit(1);
+    }
+    return v;
+}
 
 void queima(char **tabuleiro, int indice_Linha, int indice_coluna){
     int i, j;
@@ -52,31 +61,62 @@ void queima(char **tabuleiro, int indice_Linha, int indice_coluna){
     }
 }
 
+
+int *Limitador(int *limitadores, int indice_linha, int indice_coluna, int limitador, int linhas, int colunas){
+    // limitador = [cima, direita, baixo, esquerda]
+    
+    
+    limitadores[0] = limitador;
+    limitadores[1] = limitador;
+    limitadores[2] = limitador;
+    limitadores[3] = limitador;
+    do{
+
+        if(indice_coluna - limitador < 0){
+            limitadores[0] -= 1;
+        }
+        if(indice_linha + limitador >= linhas){
+            limitadores[1] -= 1;
+        }
+        if(indice_linha + limitador >= colunas){
+            limitadores[2] -= 1;
+        }
+        if(indice_linha - limitador < 0){
+            limitadores[3] -= 1;
+        }
+
+    }while(indice_coluna - limitador < 0 || indice_linha + limitador >= linhas || indice_linha + limitador >= colunas || indice_linha - limitador < 0);
+    return limitadores;
+}
 void ataque_MagoFogo(char **tabuleiro, int linhas, int colunas){}
 
 int main(){
-    int linhas, colunas, i, j;
+    int linhas, colunas, i, j, *Limitadora;
     char **tabuleiro, *Vetor;
     
-    scanf("%d %d", &linhas, &colunas);
+    // scanf("%d %d", &linhas, &colunas);
     
-    tabuleiro = AlocaTabuleiro(linhas, colunas);
-    Vetor = AlocaVetor(colunas + 1);
+    // tabuleiro = AlocaTabuleiro(linhas, colunas);
+    // Vetor = AlocaVetor(colunas + 1);
 
-    for(i = 0; i < linhas; i++){
-        getchar();
-        fgets(Vetor, colunas + 1, stdin);
-        for(j = 0; j < colunas; j++){
-            tabuleiro[i][j] = Vetor[j];
-        }
-    }
-
+    // for(i = 0; i < linhas; i++){
+    //     getchar();
+    //     fgets(Vetor, colunas + 1, stdin);
+    //     for(j = 0; j < colunas; j++){
+    //         tabuleiro[i][j] = Vetor[j];
+    //     }
+    // }
+    Limitadora = AlocaVetorInt(4);
+    Limitadora = Limitador(Limitadora, 2, 2, 1, 3, 3);
+    printf("%d %d %d %d", Limitadora[0], Limitadora[1], Limitadora[2], Limitadora[3]);
     // queima(tabuleiro, 10, 5);
 
-    for(i = 0; i < linhas; i++){
-        for(j = 0; j < colunas; j++){
-            printf("%c", tabuleiro[i][j]);
-        }
-        printf("\n");
-    }
+//     for(i = 0; i < linhas; i++){
+//         for(j = 0; j < colunas; j++){
+//             printf("%c", tabuleiro[i][j]);
+//         }
+//         printf("\n");
+//     }
+
+    
 }

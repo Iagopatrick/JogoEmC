@@ -54,10 +54,10 @@ void ImprimeTabuleiro(char **tabuleiro, int linhas, int colunas){
     }
 }
 
-int *Limitador(int indice_linha, int indice_coluna, int limitador, int linhas, int colunas){
+int *Limitador(int *limitadores, int indice_linha, int indice_coluna, int limitador, int linhas, int colunas){
     // limitador = [cima, direita, baixo, esquerda]
-    int *limitadores;
-    limitadores = AlocaVetorInt(4);
+    
+    
     limitadores[0] = limitador;
     limitadores[1] = limitador;
     limitadores[2] = limitador;
@@ -87,10 +87,10 @@ void queima(char **tabuleiro,int linhas, int colunas, int indice_Linha, int indi
     // sete células
     // ATENÇÃO: teoricamente eu precisaria de um limitador, para nao ultrapassar o tamanho da matriz
     limitadores = AlocaVetorInt(4);
-    limitadores = Limitador(indice_Linha, indice_coluna, 8, linhas, colunas);
+    limitadores = Limitador(limitadores, indice_Linha, indice_coluna, 8, linhas, colunas);
+    printf("Chuegei");
     
     for(i = indice_Linha - limitadores[0] ; i < limitadores[2] ; i++){
-
         for(j = indice_coluna - limitadores[3]; j < limitadores[1]; j++){
             if(tabuleiro[indice_Linha - i][indice_coluna - j] == 'P'){
                 tabuleiro[indice_Linha - i][indice_coluna - j] = 'F';
@@ -98,6 +98,7 @@ void queima(char **tabuleiro,int linhas, int colunas, int indice_Linha, int indi
             }
         }
     }
+    
 }
 
 
@@ -122,7 +123,7 @@ int main(){
         }
     }
 
-    queima(tabuleiro, linhas, colunas, 10, 5);
+    // queima(tabuleiro, linhas, colunas, 2, 2);
 
     // ImprimeTabuleiro(tabuleiro, linhas, colunas);
     for(i = 0; i < linhas; i++){
